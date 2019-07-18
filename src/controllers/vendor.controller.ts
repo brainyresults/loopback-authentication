@@ -40,53 +40,53 @@ import {
 } from '@loopback/rest';
 import * as _ from 'lodash';
 
-import { User, Aluno, Treino } from '../models';
-import { AlunoRepository } from '../repositories';
-import { TreinoModel } from '../models/mongodb';
+import { User, Vendor } from '../models';
+import { VendorRepository } from '../repositories';
+import { VendorModel } from '../models/mongodb';
 
-export class AlunoController {
+export class VendorController {
   constructor(
-    @repository(AlunoRepository) public alunoRepository: AlunoRepository,
+    @repository(VendorRepository) public vendorRepository: VendorRepository,
     @inject(PasswordHasherBindings.PASSWORD_HASHER) public passwordHasher: PasswordHasher,
     @inject(TokenServiceBindings.TOKEN_SERVICE) public jwtService: TokenService,
     @inject(UserServiceBindings.USER_SERVICE) public userService: UserService<User, Credentials>,
   ) { }
 
-  @post('/alunos', {
+  @post('/vendors', {
     responses: {
       '200': {
-        description: 'Aluno model instance',
-        content: { 'application/json': { schema: { 'x-ts-type': Aluno } } },
+        description: 'Vendor model instance',
+        content: { 'application/json': { schema: { 'x-ts-type': Vendor } } },
       },
     },
   })
   @authenticate('jwt')
-  async create(@requestBody() aluno: Aluno): Promise<Aluno> {
-    return await this.alunoRepository.create(aluno);
+  async create(@requestBody() vendor: Vendor): Promise<Vendor> {
+    return await this.vendorRepository.create(vendor);
   }
 
-  @get('/alunos/count', {
+  @get('/vendors/count', {
     responses: {
       '200': {
-        description: 'Aluno model count',
+        description: 'Vendor model count',
         content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
   @authenticate('jwt')
   async count(
-    @param.query.object('where', getWhereSchemaFor(Aluno)) where?: Where<Aluno>,
+    @param.query.object('where', getWhereSchemaFor(Vendor)) where?: Where<Vendor>,
   ): Promise<Count> {
-    return await this.alunoRepository.count(where);
+    return await this.vendorRepository.count(where);
   }
 
-  @get('/alunos', {
+  @get('/vendors', {
     responses: {
       '200': {
-        description: 'Array of Aluno model instances',
+        description: 'Array of Vendor model instances',
         content: {
           'application/json': {
-            schema: { type: 'array', items: { 'x-ts-type': Aluno } },
+            schema: { type: 'array', items: { 'x-ts-type': Vendor } },
           },
         },
       },
@@ -94,96 +94,93 @@ export class AlunoController {
   })
   @authenticate('jwt')
   async find(
-    @param.query.object('filter', getFilterSchemaFor(Aluno)) filter?: Filter<Aluno>,
-  ): Promise<Aluno[]> {
-    return await this.alunoRepository.find(filter);
+    @param.query.object('filter', getFilterSchemaFor(Vendor)) filter?: Filter<Vendor>,
+  ): Promise<Vendor[]> {
+    return await this.vendorRepository.find(filter);
   }
 
-  @patch('/alunos', {
+  @patch('/vendors', {
     responses: {
       '200': {
-        description: 'Aluno PATCH success count',
+        description: 'Vendor PATCH success count',
         content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
   @authenticate('jwt')
   async updateAll(
-    @requestBody() aluno: Aluno,
-    @param.query.object('where', getWhereSchemaFor(Aluno)) where?: Where<Aluno>,
+    @requestBody() vendor: Vendor,
+    @param.query.object('where', getWhereSchemaFor(Vendor)) where?: Where<Vendor>,
   ): Promise<Count> {
-    return await this.alunoRepository.updateAll(aluno, where);
+    return await this.vendorRepository.updateAll(vendor, where);
   }
 
-  @get('/alunos/{id}', {
+  @get('/vendors/{id}', {
     responses: {
       '200': {
-        description: 'Aluno model instance',
-        content: { 'application/json': { schema: { 'x-ts-type': Aluno } } },
+        description: 'Vendor model instance',
+        content: { 'application/json': { schema: { 'x-ts-type': Vendor } } },
       },
     },
   })
   @authenticate('jwt')
-  async findById(@param.path.string('id') id: string): Promise<Aluno> {
-    return await this.alunoRepository.findById(id);
+  async findById(@param.path.string('id') id: string): Promise<Vendor> {
+    return await this.vendorRepository.findById(id);
   }
 
-  @patch('/alunos/{id}', {
+  @patch('/vendors/{id}', {
     responses: {
       '204': {
-        description: 'Aluno PATCH success',
+        description: 'Vendor PATCH success',
       },
     },
   })
   @authenticate('jwt')
   async updateById(
     @param.path.string('id') id: string,
-    @requestBody() aluno: Aluno,
+    @requestBody() vendor: Vendor,
   ): Promise<void> {
-    await this.alunoRepository.updateById(id, aluno);
+    await this.vendorRepository.updateById(id, vendor);
   }
 
-  @put('/alunos/{id}', {
+  @put('/vendors/{id}', {
     responses: {
       '204': {
-        description: 'Aluno PUT success',
+        description: 'Vendor PUT success',
       },
     },
   })
   @authenticate('jwt')
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() aluno: Aluno,
+    @requestBody() vendor: Vendor,
   ): Promise<void> {
-    await this.alunoRepository.replaceById(id, aluno);
+    await this.vendorRepository.replaceById(id, vendor);
   }
 
-  @del('/alunos/{id}', {
+  @del('/vendors/{id}', {
     responses: {
       '204': {
-        description: 'Aluno DELETE success',
+        description: 'Vendor DELETE success',
       },
     },
   })
   @authenticate('jwt')
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.alunoRepository.deleteById(id);
+    await this.vendorRepository.deleteById(id);
   }
 
-  @post('/alunos/{userId}/treino', {
+  @get('/vendors/{userId}/info', {
     responses: {
       '200': {
-        description: 'Aluno model instance',
-        content: { 'application/json': { schema: { 'x-ts-type': TreinoModel } } },
+        description: 'Vendor model instance',
+        content: { 'application/json': { schema: { 'x-ts-type': VendorModel } } },
       },
     },
   })
   @authenticate('jwt')
-  async createTreino(
-    @param.path.string('userId') userId: string,
-    @requestBody() treino: TreinoModel
-  ): Promise<TreinoModel> {
-    return await this.alunoRepository.createTreino(userId, treino);
+  async getVendor(@param.path.string('userId') userId: string): Promise<VendorModel | void> {
+    return await this.vendorRepository.getVendor(userId);
   }
 
 }

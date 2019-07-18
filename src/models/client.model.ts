@@ -1,8 +1,7 @@
 import { Entity, model, property } from '@loopback/repository';
-import { Treino } from './treino.model';
 
 @model({ settings: {} })
-export class Aluno extends Entity {
+export class Client extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -16,16 +15,6 @@ export class Aluno extends Entity {
   userId: string;
 
   @property({
-    type: 'number',
-  })
-  peso?: number;
-
-  @property({
-    type: 'number',
-  })
-  altura?: number;
-
-  @property({
     type: 'date',
   })
   data_pagamento?: string;
@@ -35,20 +24,14 @@ export class Aluno extends Entity {
   })
   data_cancelamento?: string;
 
-  @property({
-    type: 'array',
-    itemType: Treino
-  })
-  treinos?: Treino[];
 
-
-  constructor(data?: Partial<Aluno>) {
+  constructor(data?: Partial<Client>) {
     super(data);
   }
 }
 
-export interface AlunoRelations {
+export interface ClientRelations {
   // describe navigational properties here
 }
 
-export type AlunoWithRelations = Aluno & AlunoRelations;
+export type ClientWithRelations = Client & ClientRelations;

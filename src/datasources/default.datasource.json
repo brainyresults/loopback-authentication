@@ -6,6 +6,6 @@
   "port": 27017,
   "user": "",
   "password": "",
-  "database": "coach-api",
+  "database": "auth_model",
   "useNewUrlParser": true
 }

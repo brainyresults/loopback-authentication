@@ -45,10 +45,10 @@ import {
 } from '@loopback/rest';
 import * as _ from 'lodash';
 
-import { User, Aluno, AlunoRelations } from '../models';
+import { User, Client, ClientRelations } from '../models';
 import { UserRepository } from '../repositories';
-import { AlunoRepository } from '../repositories';
-import { AlunoModel, UserModel } from '../models/mongodb';
+import { ClientRepository } from '../repositories';
+import { ClientModel, UserModel } from '../models/mongodb';
 import { UserProfileExtended } from "../models/bindings/auth.bind"
 import { UserServiceConstants } from "../keys";
 
@@ -57,7 +57,7 @@ export class UserController {
 
   constructor(
     @repository(UserRepository) public userRepository: UserRepository,
-    @repository(AlunoRepository) public alunoRepository: AlunoRepository,
+    @repository(ClientRepository) public clientRepository: ClientRepository,
     @inject(PasswordHasherBindings.PASSWORD_HASHER) public passwordHasher: PasswordHasher,
     @inject(TokenServiceBindings.TOKEN_SERVICE) public jwtService: TokenService,
     @inject(UserServiceBindings.USER_SERVICE) public userService: UserService<User, Credentials>,
@@ -261,36 +261,36 @@ export class UserController {
     };
   }
 
-  @get('/users/{id}/aluno', {
+  @get('/users/{id}/client', {
     responses: {
       '200': {
-        description: 'get Aluno',
+        description: 'get Client',
         content: {
           'application/json': {
-            schema: { type: 'array', items: { 'x-ts-type': Aluno } },
+            schema: { type: 'array', items: { 'x-ts-type': Client } },
           },
         },
       },
     },
   })
   @authenticate('jwt')
-  async getAluno(
+  async getClient(
     @param.path.string('id') id: string
-  ): Promise<(Aluno & AlunoRelations) | any> {
+  ): Promise<(Client & ClientRelations) | any> {
     let _ret: any = {};
 
-    let alunos = await this.userRepository.getAluno(id);
-    // console.log('alunos', alunos);
+    let clients = await this.userRepository.getClient(id);
+    // console.log('clients', clients);
 
-    if (alunos && alunos.length > 0) {
+    if (clients && clients.length > 0) {
       // traz somente os ids
-      let aluno: AlunoModel = alunos[0];
+      let client: ClientModel = clients[0];
 
       // recupera os dados
-      let _id = "" + aluno.id;
-      let _aluno = await this.alunoRepository.findById(_id);
-      // console.log('aluno', aluno, _aluno);
-      return _aluno;
+      let _id = "" + client.id;
+      let _client = await this.clientRepository.findById(_id);
+      // console.log('client', client, _client);
+      return _client;
     }
 
     return _ret;

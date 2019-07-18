@@ -3,11 +3,11 @@ import { User, UserRelations } from '../models';
 import { DefaultDataSource } from '../datasources';
 import { inject } from '@loopback/core';
 
-import { UserModel, AlunoModel, PersonalModel } from '../models/mongodb';
+import { UserModel, ClientModel, VendorModel } from '../models/mongodb';
 import { DAO } from "../dao/main.dao";
 import { UserDAO } from '../dao/user.dao';
-import { AlunoDAO } from '../dao/aluno.dao';
-import { PersonalDAO } from '../dao/personal.dao';
+import { ClientDAO } from '../dao/client.dao';
+import { VendorDAO } from '../dao/vendor.dao';
 import { Credentials } from "../models/bindings/auth.bind";
 
 export class UserRepository extends DefaultCrudRepository<
@@ -21,9 +21,9 @@ export class UserRepository extends DefaultCrudRepository<
     super(User, dataSource);
   }
 
-  async getAluno(
+  async getClient(
     id: typeof User.prototype.id,
-  ): Promise<AlunoModel[] | void> {
+  ): Promise<ClientModel[] | void> {
     if (!await this.exists(id)) {
       throw new Error('User not found...');
     }
@@ -33,20 +33,20 @@ export class UserRepository extends DefaultCrudRepository<
       DAO.invalidEscape(conn, true);
 
     let filter = { userId: id };
-    let alunos = await AlunoDAO.findAlunosByFilter(conn, filter);
+    let clients = await ClientDAO.findClientsByFilter(conn, filter);
 
-    if (alunos.length == 0) {
+    if (clients.length == 0) {
       DAO.invalidEscape(conn);
       return [];
     }
 
     await DAO.disconnect(conn);
-    return alunos;
+    return clients;
   }
 
-  async getPersonal(
+  async getVendor(
     id: typeof User.prototype.id,
-  ): Promise<PersonalModel[] | void> {
+  ): Promise<VendorModel[] | void> {
     if (!await this.exists(id)) {
       throw new Error('User not found...');
     }
@@ -56,15 +56,15 @@ export class UserRepository extends DefaultCrudRepository<
       DAO.invalidEscape(conn, true);
 
     let filter = { userId: id };
-    let personals = await PersonalDAO.findPersonalsByFilter(conn, filter);
+    let vendors = await VendorDAO.findVendorsByFilter(conn, filter);
 
-    if (personals.length == 0) {
+    if (vendors.length == 0) {
       DAO.invalidEscape(conn);
       return [];
     }
 
     await DAO.disconnect(conn);
-    return personals;
+    return vendors;
   }
 
 }

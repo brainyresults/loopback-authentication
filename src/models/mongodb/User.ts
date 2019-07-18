@@ -19,9 +19,6 @@ export class UserModel {
   user_role: number;
 
   @Column()
-  cidade?: string;
-
-  @Column()
   data_nascimento?: string;
 
   @Column()

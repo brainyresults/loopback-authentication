@@ -2,14 +2,9 @@ import { DefaultDataSource } from '../datasources';
 import { createConnection, Connection, ObjectID } from "typeorm";
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
 
-import { AlunoModel } from '../models/mongodb/Aluno';
-import { AtividadeModel } from '../models/mongodb/Atividade';
-import { AulaModel } from '../models/mongodb/Aula';
-import { ExercicioModel } from '../models/mongodb/Exercicio';
-import { ExercicioModeloModel } from '../models/mongodb/ExercicioModelo';
-import { PersonalModel } from '../models/mongodb/Personal';
-import { TreinoModel } from '../models/mongodb/Treino';
 import { UserModel } from '../models/mongodb/User';
+import { ClientModel } from '../models/mongodb/Client';
+import { VendorModel } from '../models/mongodb/Vendor';
 
 export let DAO = {
   getDataSource: async function (dataSource: DefaultDataSource) {
@@ -26,14 +21,9 @@ export let DAO = {
       password: dataSource.settings.password,
       database: dataSource.settings.database,
       entities: [
-        AlunoModel,
-        AtividadeModel,
-        AulaModel,
-        ExercicioModel,
-        ExercicioModeloModel,
-        PersonalModel,
-        TreinoModel,
         UserModel,
+        ClientModel,
+        VendorModel,
       ],
       useNewUrlParser: true
     }

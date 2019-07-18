@@ -1,8 +1,7 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from "typeorm";
-import { TreinoModel } from "./Treino"
 
-@Entity({ name: 'Aluno' })
-export class AlunoModel {
+@Entity({ name: 'Client' })
+export class ClientModel {
 
   @ObjectIdColumn()
   id?: ObjectID;
@@ -11,17 +10,9 @@ export class AlunoModel {
   userId: string;
 
   @Column()
-  peso?: number;
-
-  @Column()
-  altura?: number;
-
-  @Column()
   data_pagamento?: string;
 
   @Column()
   data_cancelamento?: string;
 
-  @Column()
-  treinos?: TreinoModel[];
 }
