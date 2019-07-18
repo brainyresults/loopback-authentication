@@ -1,0 +1,51 @@
+@startuml model
+
+' #############################################################
+enum UserRoleEnum {
+    Client
+    Vendor
+    Admin
+}
+
+enum SexoEnum {
+    Feminino
+    Masculino
+}
+
+
+' #############################################################
+class User <<Entity>> {
+    nome
+    email
+    password
+    user_role UserRoleEnum
+    data_nascimento Date
+    sexo SexoEnum
+    se_ativo Boolean
+}
+
+class Client <<Entity>> {
+    userId User
+    data_pagamento DateTime
+    data_cancelamento DateTime
+}
+
+class Vendor <<Entity>> {
+    userId User
+    clients[] Client
+}
+
+class Admin <<Entity>> {
+    userId User
+    vendors[] Vendor
+}
+
+' #############################################################
+User - Client
+User -- Vendor
+User -- Admin
+
+Vendor - Client :clients >
+Admin - Vendor :vendors >
+
+@enduml
