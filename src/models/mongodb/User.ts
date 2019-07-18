@@ -16,7 +16,7 @@ export class UserModel {
   password: string;
 
   @Column()
-  tipo_user: number;
+  user_role: number;
 
   @Column()
   cidade?: string;

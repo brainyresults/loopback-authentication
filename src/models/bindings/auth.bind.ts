@@ -9,5 +9,5 @@ export interface UserProfileExtended extends UserProfile {
   id: string;
   name?: string;
   email?: string;
-  tipo_user?: number;
+  user_role?: number;
 }

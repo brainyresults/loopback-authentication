@@ -244,9 +244,9 @@ export class UserController {
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
 
-    // salva o tipo_user nos dados do User
+    // salva o user_role nos dados do User
     let user_profile: UserProfileExtended = this.userService.convertToUserProfile(user);
-    user_profile.tipo_user = user.tipo_user;
+    user_profile.user_role = user.user_role;
     this.user = user_profile;
 
     // convert a User object into a UserProfile object (reduced set of properties)

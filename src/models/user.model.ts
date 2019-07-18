@@ -12,7 +12,7 @@ export class User extends Entity {
     type: 'number',
     default: 0,
   })
-  tipo_user: number;
+  user_role: number;
 
   @property({
     type: 'string',

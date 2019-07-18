@@ -11,7 +11,7 @@ export const UserProfileSchema = {
     id: { type: 'string' },
     email: { type: 'string' },
     name: { type: 'string' },
-    tipo_user: { type: 'number' },
+    user_role: { type: 'number' },
   },
 };
 
