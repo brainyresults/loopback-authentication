@@ -1,3 +1,5 @@
 # Datasources
 
-This directory contains config for datasources used by this app.
+O Datasource padrão será o de arquivo (json).
+
+Depois de testar, se troca para o MongoDB.
