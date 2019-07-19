@@ -170,6 +170,7 @@ export class VendorController {
     await this.vendorRepository.deleteById(id);
   }
 
+  /** /
   @get('/vendors/{userId}/info', {
     responses: {
       '200': {
@@ -182,5 +183,5 @@ export class VendorController {
   async getVendor(@param.path.string('userId') userId: string): Promise<VendorModel | void> {
     return await this.vendorRepository.getVendor(userId);
   }
-
+  /**/
 }

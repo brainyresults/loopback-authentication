@@ -103,7 +103,7 @@ export class UserController {
       },
     },
   })
-  @authenticate('jwt')
+  // @authenticate('jwt')
   async count(
     @param.query.object('where', getWhereSchemaFor(User)) where?: Where<User>,
   ): Promise<Count> {
@@ -141,7 +141,7 @@ export class UserController {
       },
     },
   })
-  @authenticate('jwt')
+  // @authenticate('jwt')
   async find(
     @param.query.object('filter', getFilterSchemaFor(User)) filter?: Filter<User>,
   ): Promise<User[]> {
@@ -261,6 +261,7 @@ export class UserController {
     };
   }
 
+  /** /
   @get('/users/{id}/client', {
     responses: {
       '200': {
@@ -295,5 +296,6 @@ export class UserController {
 
     return _ret;
   }
+  /**/
 
 }

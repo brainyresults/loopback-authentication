@@ -1,13 +1,13 @@
 import { DefaultCrudRepository } from '@loopback/repository';
-import { DefaultDataSource } from '../datasources';
+import { JsonDataSource } from '../datasources';
 import { inject } from '@loopback/core';
 
-import { DAO } from "../dao/main.dao";
-import { VendorDAO } from '../dao/vendor.dao';
+// import { DAO } from "../dao/main.dao";
+// import { VendorDAO } from '../dao/vendor.dao';
+// import { ClientDAO } from '../dao/client.dao';
+// import { VendorModel } from '../models/mongodb';
 import { User, Vendor, VendorRelations } from '../models';
-import { VendorModel } from '../models/mongodb';
 import { UserRepository } from '../repositories';
-import { ClientDAO } from '../dao/client.dao';
 
 export class VendorRepository extends DefaultCrudRepository<
   Vendor,
@@ -18,12 +18,13 @@ export class VendorRepository extends DefaultCrudRepository<
   userRepository: UserRepository;
 
   constructor(
-    @inject('datasources.default') dataSource: DefaultDataSource,
+    @inject('datasources.JSON') dataSource: JsonDataSource,
   ) {
     super(Vendor, dataSource);
     this.userRepository = new UserRepository(this.dataSource);
   }
 
+  /** /
   async getVendor(
     id: typeof User.prototype.id,
   ): Promise<VendorModel | void> {
@@ -46,5 +47,6 @@ export class VendorRepository extends DefaultCrudRepository<
     await DAO.disconnect(conn);
     return vendors[0];
   }
+  /**/
 
 }

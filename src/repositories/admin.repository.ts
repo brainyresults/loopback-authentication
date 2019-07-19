@@ -1,11 +1,11 @@
 import { DefaultCrudRepository } from '@loopback/repository';
-import { DefaultDataSource } from '../datasources';
+import { JsonDataSource } from '../datasources';
 import { inject } from '@loopback/core';
 
-import { DAO } from "../dao/main.dao";
-import { AdminDAO } from '../dao/admin.dao';
+// import { DAO } from "../dao/main.dao";
+// import { AdminDAO } from '../dao/admin.dao';
 import { User, Admin, AdminRelations } from '../models';
-import { AdminModel } from '../models/mongodb';
+// import { AdminModel } from '../models/mongodb';
 import { UserRepository } from '../repositories';
 
 export class AdminRepository extends DefaultCrudRepository<
@@ -17,12 +17,13 @@ export class AdminRepository extends DefaultCrudRepository<
   userRepository: UserRepository;
 
   constructor(
-    @inject('datasources.default') dataSource: DefaultDataSource,
+    @inject('datasources.JSON') dataSource: JsonDataSource,
   ) {
     super(Admin, dataSource);
     this.userRepository = new UserRepository(this.dataSource);
   }
 
+  /** /
   async getAdmin(
     id: typeof User.prototype.id,
   ): Promise<AdminModel | void> {
@@ -45,4 +46,6 @@ export class AdminRepository extends DefaultCrudRepository<
     await DAO.disconnect(conn);
     return admins[0];
   }
+  /**/
+
 }

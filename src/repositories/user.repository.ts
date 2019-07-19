@@ -1,13 +1,13 @@
 import { DefaultCrudRepository } from '@loopback/repository';
 import { User, UserRelations } from '../models';
-import { DefaultDataSource } from '../datasources';
+import { JsonDataSource } from '../datasources';
 import { inject } from '@loopback/core';
 
-import { UserModel, ClientModel, VendorModel } from '../models/mongodb';
-import { DAO } from "../dao/main.dao";
-import { UserDAO } from '../dao/user.dao';
-import { ClientDAO } from '../dao/client.dao';
-import { VendorDAO } from '../dao/vendor.dao';
+// import { UserModel, ClientModel, VendorModel } from '../models/mongodb';
+// import { DAO } from "../dao/main.dao";
+// import { UserDAO } from '../dao/user.dao';
+// import { ClientDAO } from '../dao/client.dao';
+// import { VendorDAO } from '../dao/vendor.dao';
 import { Credentials } from "../models/bindings/auth.bind";
 
 export class UserRepository extends DefaultCrudRepository<
@@ -16,11 +16,12 @@ export class UserRepository extends DefaultCrudRepository<
   UserRelations
   > {
   constructor(
-    @inject('datasources.default') dataSource: DefaultDataSource,
+    @inject('datasources.JSON') dataSource: JsonDataSource,
   ) {
     super(User, dataSource);
   }
 
+  /** /
   async getClient(
     id: typeof User.prototype.id,
   ): Promise<ClientModel[] | void> {
@@ -43,7 +44,9 @@ export class UserRepository extends DefaultCrudRepository<
     await DAO.disconnect(conn);
     return clients;
   }
+  /**/
 
+  /** /
   async getVendor(
     id: typeof User.prototype.id,
   ): Promise<VendorModel[] | void> {
@@ -66,5 +69,6 @@ export class UserRepository extends DefaultCrudRepository<
     await DAO.disconnect(conn);
     return vendors;
   }
+  /**/
 
 }
