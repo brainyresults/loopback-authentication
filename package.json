@@ -1,7 +1,7 @@
 {
-  "name": "fitness-api",
+  "name": "loopback-authentication",
   "version": "1.0.0",
-  "description": "fitness api",
+  "description": "Default auth for loopback",
   "keywords": [
     "loopback-application",
     "loopback"
